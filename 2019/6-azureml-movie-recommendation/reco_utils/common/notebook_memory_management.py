@@ -54,12 +54,10 @@ def stop_watching_memory():
         ip.events.unregister("post_run_cell", watch_memory)
     except ValueError:
         print("ERROR: problem when unregistering")
-        pass
     try:
         ip.events.unregister("pre_run_cell", pre_run_cell)
     except ValueError:
         print("ERROR: problem when unregistering")
-        pass
 
 
 def watch_memory():

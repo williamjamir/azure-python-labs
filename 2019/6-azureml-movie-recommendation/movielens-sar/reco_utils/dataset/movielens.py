@@ -488,7 +488,7 @@ def _maybe_download_and_extract(size, dest_path):
     _, item_filename = os.path.split(DATA_FORMAT[size].item_path)
     item_path = os.path.join(dirs, item_filename)
 
-    if not os.path.exists(rating_path) or not os.path.exists(item_path):
+    if not (os.path.exists(rating_path) and os.path.exists(item_path)):
         download_movielens(size, dest_path)
         extract_movielens(size, rating_path, item_path, dest_path)
 

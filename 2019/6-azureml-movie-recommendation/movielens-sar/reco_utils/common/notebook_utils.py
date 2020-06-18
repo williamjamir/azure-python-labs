@@ -13,10 +13,7 @@ def is_jupyter():
     """
     try:
         shell_name = get_ipython().__class__.__name__
-        if shell_name == 'ZMQInteractiveShell':
-            return True
-        else:
-            return False
+        return shell_name == 'ZMQInteractiveShell'
     except NameError:
         return False
 
@@ -29,9 +26,6 @@ def is_databricks():
         False otherwise.
     """
     try:
-        if os.path.realpath(".") == "/databricks/driver":
-            return True
-        else:
-            return False
+        return os.path.realpath(".") == "/databricks/driver"
     except NameError:
         return False

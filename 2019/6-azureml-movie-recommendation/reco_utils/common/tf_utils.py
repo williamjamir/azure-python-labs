@@ -37,11 +37,7 @@ def pandas_input_fn(
     """
 
     X_df = df.copy()
-    if y_col is not None:
-        y = X_df.pop(y_col).values
-    else:
-        y = None
-
+    y = X_df.pop(y_col).values if y_col is not None else None
     X = {}
     for col in X_df.columns:
         values = X_df[col].values
@@ -49,7 +45,7 @@ def pandas_input_fn(
             values = np.array([l for l in values], dtype=np.float32)
         X[col] = values
 
-    input_fn = tf.estimator.inputs.numpy_input_fn(
+    return tf.estimator.inputs.numpy_input_fn(
         x=X,
         y=y,
         batch_size=batch_size,
@@ -57,8 +53,6 @@ def pandas_input_fn(
         shuffle=shuffle,
         num_threads=num_threads
     )
-
-    return input_fn
 
 
 def build_optimizer(name, lr=0.001, **kwargs):

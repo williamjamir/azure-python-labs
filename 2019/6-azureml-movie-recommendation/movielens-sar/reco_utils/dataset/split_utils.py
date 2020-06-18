@@ -30,7 +30,7 @@ def process_split_ratio(ratio):
 
         multi = False
     elif isinstance(ratio, list):
-        if any([x <= 0 for x in ratio]):
+        if any(x <= 0 for x in ratio):
             raise ValueError(
                 "All split ratios in the ratio list should be larger than 0."
             )
@@ -75,10 +75,9 @@ def min_rating_filter_pandas(
     split_by_column, _ = _check_min_rating_filter(
         filter_by, min_rating, col_user, col_item
     )
-    rating_filtered = data.groupby(split_by_column).filter(
+    return data.groupby(split_by_column).filter(
         lambda x: len(x) >= min_rating
     )
-    return rating_filtered
 
 
 def min_rating_filter_spark(
@@ -117,14 +116,13 @@ def min_rating_filter_spark(
         .where(col("n" + split_with_column) >= min_rating)
     )
 
-    rating_filtered = data.join(broadcast(rating_temp), split_by_column).drop(
+    return data.join(broadcast(rating_temp), split_by_column).drop(
         "n" + split_with_column
     )
-    return rating_filtered
 
 
 def _check_min_rating_filter(filter_by, min_rating, col_user, col_item):
-    if not (filter_by == "user" or filter_by == "item"):
+    if not filter_by in ["user", "item"]:
         raise ValueError("filter_by should be either 'user' or 'item'.")
 
     if min_rating < 1:

@@ -71,7 +71,7 @@ def spark_chrono_split(
     Returns:
         list: Splits of the input data as spark.DataFrame.
     """
-    if not (filter_by == "user" or filter_by == "item"):
+    if not filter_by in ["user", "item"]:
         raise ValueError("filter_by should be either 'user' or 'item'.")
 
     if min_rating < 1:
@@ -153,7 +153,7 @@ def spark_stratified_split(
     Returns:
         list: Splits of the input data as spark.DataFrame.
     """
-    if not (filter_by == "user" or filter_by == "item"):
+    if not filter_by in ["user", "item"]:
         raise ValueError("filter_by should be either 'user' or 'item'.")
 
     if min_rating < 1:

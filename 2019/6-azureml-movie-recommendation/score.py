@@ -27,5 +27,4 @@ def run(raw_data):
         data = pd.read_json(data)
         return model.get_item_based_topk(items=data, sort_top_k=True).to_json()
     except Exception as e:
-        error = str(e)
-        return error
+        return str(e)

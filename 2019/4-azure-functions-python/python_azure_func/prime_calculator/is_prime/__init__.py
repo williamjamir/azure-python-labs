@@ -24,7 +24,6 @@ def is_prime(number: int) -> bool:
     """Tests primeness of number, returns true if prime."""
     min_divisor = 2
     max_divisor = math.ceil(math.sqrt(number))
-    for divisor in range(min_divisor, max_divisor + 1):
-        if number % divisor == 0:
-            return False
-    return True
+    return all(
+        number % divisor != 0 for divisor in range(min_divisor, max_divisor + 1)
+    )

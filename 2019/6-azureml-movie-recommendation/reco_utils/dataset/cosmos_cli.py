@@ -22,10 +22,7 @@ def find_collection(client, dbid, id):
             },
         )
     )
-    if len(collections) > 0:
-        return True
-    else:
-        return False
+    return len(collections) > 0
 
 
 def read_collection(client, dbid, id):
@@ -40,8 +37,7 @@ def read_collection(client, dbid, id):
     try:
         database_link = "dbs/" + dbid
         collection_link = database_link + "/colls/{0}".format(id)
-        collection = client.ReadCollection(collection_link)
-        return collection
+        return client.ReadCollection(collection_link)
     except errors.DocumentDBError as e:
         if e.status_code == 404:
             print("A collection with id '{0}' does not exist".format(id))
@@ -59,8 +55,7 @@ def read_database(client, id):
     """
     try:
         database_link = "dbs/" + id
-        database = client.ReadDatabase(database_link)
-        return database
+        return client.ReadDatabase(database_link)
     except errors.DocumentDBError as e:
         if e.status_code == 404:
             print("A database with id '{0}' does not exist".format(id))
@@ -84,8 +79,5 @@ def find_database(client, id):
             }
         )
     )
-    if len(databases) > 0:
-        return True
-    else:
-        return False
+    return len(databases) > 0
 

@@ -292,9 +292,7 @@ class SparkRankingEvaluation:
         Return:
             float: precision at k (min=0, max=1)
         """
-        precision = self._metrics.precisionAt(self.k)
-
-        return precision
+        return self._metrics.precisionAt(self.k)
 
     def recall_at_k(self):
         """Get recall@K.
@@ -304,11 +302,9 @@ class SparkRankingEvaluation:
         Return:
             float: recall at k (min=0, max=1).
         """
-        recall = self._items_for_user_all.rdd.map(
+        return self._items_for_user_all.rdd.map(
             lambda x: float(len(set(x[0]).intersection(set(x[1])))) / float(len(x[1]))
         ).mean()
-
-        return recall
 
     def ndcg_at_k(self):
         """Get Normalized Discounted Cumulative Gain (NDCG)
@@ -318,9 +314,7 @@ class SparkRankingEvaluation:
         Return:
             float: nDCG at k (min=0, max=1).
         """
-        ndcg = self._metrics.ndcgAt(self.k)
-
-        return ndcg
+        return self._metrics.ndcgAt(self.k)
 
     def map_at_k(self):
         """Get mean average precision at k.
@@ -330,9 +324,7 @@ class SparkRankingEvaluation:
         Return:
             float: MAP at k (min=0, max=1).
         """
-        maprecision = self._metrics.meanAveragePrecision
-
-        return maprecision
+        return self._metrics.meanAveragePrecision
 
 
 def _get_top_k_items(
